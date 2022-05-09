@@ -7,21 +7,24 @@
 //======================================================================================
 
 #include "botbase.h"
-#include <string>
 
 class cBotRandom : public cBotBase
 {
 	virtual void ChooseNextGridPosition();
 };
 
-class cBotSimple : public cBotBase
+class cDijkstra
 {
-	virtual void ChooseNextGridPosition();
+public:
+	bool closed[GRIDWIDTH][GRIDHEIGHT]; //whether or not location is closed
+	float cost[GRIDWIDTH][GRIDHEIGHT]; //cost value for each location
+	int linkX[GRIDWIDTH][GRIDHEIGHT]; //link X coord for each location
+	int linkY[GRIDWIDTH][GRIDHEIGHT]; //link Y coord for each location
+	bool inPath[GRIDWIDTH][GRIDHEIGHT]; //whether or not a location is in the final path
+
+	bool completed;
+
+	virtual void Build(cBotBase &bot);
 };
 
-class cBotSimple2 : public cBotBase
-{
-	bool stuckX, stuckY;
-	int directionX = 1, directionY = 1;
-	virtual void ChooseNextGridPosition();
-};
+extern cDijkstra gDijkstra;

@@ -6,7 +6,6 @@
 
 #include "bots.h"
 #include "stdlib.h"
-#include <iostream>
 
 void cBotRandom::ChooseNextGridPosition() 
 {
@@ -27,93 +26,4 @@ void cBotRandom::ChooseNextGridPosition()
 		else if (random == 2) done = SetNext((PositionX()), (PositionY() + 1), gLevel);
 		else done = SetNext((PositionX()), (PositionY() - 1), gLevel);
 	}
-}
-
-void cBotSimple::ChooseNextGridPosition()
-{
-	int moveX = 0, moveY = 0;
-	bool stuckX = false, stuckY = false;
-	if (gTarget.PositionX() != PositionX())
-	{
-		if (gTarget.PositionX() > PositionX())
-		{
-			if (gLevel.isValid(PositionX() + 1, PositionY())) moveX = 1; else stuckX = true;
-		}
-		else if (gLevel.isValid(PositionX() - 1, PositionY())) moveX = -1; else stuckX = true;
-	}
-	
-	if (gTarget.PositionY() != PositionY())
-	{
-		if (gTarget.PositionY() > PositionY())
-		{
-			if (gLevel.isValid(PositionX(), PositionY() + 1)) moveY = 1; else stuckY = true;
-		}
-		else if (gLevel.isValid(PositionX(), PositionY() - 1)) moveY = -1; else stuckY = true;
-	}
-	
-	SetNext(PositionX() + moveX, PositionY() + moveY, gLevel);
-}
-
-void cBotSimple2::ChooseNextGridPosition()
-{
-	int moveX = 0, moveY = 0;
-	if (stuckX) moveY = directionY;
-	if (stuckY) moveX = directionX;
-	stuckX = false, stuckY = false;
-	std::cout << "X: " << moveX << " Y: " << moveY << "DirectionX" << directionX << "DirectionY" << directionY << std::endl;
-	
-	if (moveX == 0)
-	{
-		std::cout << "PASS" << std::endl;
-		if (gTarget.PositionX() != PositionX())
-		{
-			if (gTarget.PositionX() > PositionX())
-			{
-				if (gLevel.isValid(PositionX() + 1, PositionY()))
-				{
-					moveX = 1;
-					stuckX = false;
-				}
-				else stuckX = true;
-			}
-			else if (gLevel.isValid(PositionX() - 1, PositionY()))
-			{
-				moveX = -1;
-				stuckX = false;
-			}
-			else stuckX = true;
-		}
-	}
-	else if (!gLevel.isValid(PositionX() + moveX, PositionY())) moveX = 0, stuckX = true;
-
-	if (moveY == 0)
-	{
-		if (gTarget.PositionY() != PositionY())
-		{
-			if (gTarget.PositionY() > PositionY())
-			{
-				if (gLevel.isValid(PositionX(), PositionY() + 1))
-				{
-					moveY = 1;
-					stuckY = false;
-				}
-				else stuckY = true;
-			}
-			else if (gLevel.isValid(PositionX(), PositionY() - 1))
-			{
-				moveY = -1;
-				stuckX = false;
-			}
-			else stuckY = true;
-		}
-	}
-	else if (!gLevel.isValid(PositionX(), PositionY() + moveY)) moveY = 0, stuckY = true;
-	
-	if (moveX != 0) directionX = moveX;
-	if (moveY != 0) directionY = moveY;
-	
-	if (directionX == NULL) std::cout << "XNULL" << std::endl;
-	if (directionY == NULL) std::cout << "YNULL" << std::endl;
-	
-	SetNext(PositionX() + moveX, PositionY() + moveY, gLevel);
 }
