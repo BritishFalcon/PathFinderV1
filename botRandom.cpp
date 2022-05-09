@@ -60,10 +60,11 @@ void cBotSimple2::ChooseNextGridPosition()
 	if (stuckX) moveY = directionY;
 	if (stuckY) moveX = directionX;
 	stuckX = false, stuckY = false;
-	std::cout << "X: " << moveX << " Y: " << moveY << std::endl;
+	std::cout << "X: " << moveX << " Y: " << moveY << "DirectionX" << directionX << "DirectionY" << directionY << std::endl;
 	
 	if (moveX == 0)
 	{
+		std::cout << "PASS" << std::endl;
 		if (gTarget.PositionX() != PositionX())
 		{
 			if (gTarget.PositionX() > PositionX())
@@ -83,9 +84,8 @@ void cBotSimple2::ChooseNextGridPosition()
 			else stuckX = true;
 		}
 	}
-	else if (!gLevel.isValid(PositionX() + moveX, PositionY())) moveX = 0; stuckX = true;
+	else if (!gLevel.isValid(PositionX() + moveX, PositionY())) moveX = 0, stuckX = true;
 
-	std::cout << moveY << std::endl;
 	if (moveY == 0)
 	{
 		if (gTarget.PositionY() != PositionY())
@@ -107,10 +107,13 @@ void cBotSimple2::ChooseNextGridPosition()
 			else stuckY = true;
 		}
 	}
-	else if (!gLevel.isValid(PositionX(), PositionY() + moveY)) moveY = 0; stuckY = true;
+	else if (!gLevel.isValid(PositionX(), PositionY() + moveY)) moveY = 0, stuckY = true;
 	
-	if (moveY != 0) directionX = moveX;
-	if (moveX != 0) directionY = moveY;
+	if (moveX != 0) directionX = moveX;
+	if (moveY != 0) directionY = moveY;
+	
+	if (directionX == NULL) std::cout << "XNULL" << std::endl;
+	if (directionY == NULL) std::cout << "YNULL" << std::endl;
 	
 	SetNext(PositionX() + moveX, PositionY() + moveY, gLevel);
 }

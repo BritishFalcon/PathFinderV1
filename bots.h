@@ -22,6 +22,6 @@ class cBotSimple : public cBotBase
 class cBotSimple2 : public cBotBase
 {
 	bool stuckX, stuckY;
-	int directionX, directionY;
+	int directionX = 1, directionY = 1;
 	virtual void ChooseNextGridPosition();
 };
