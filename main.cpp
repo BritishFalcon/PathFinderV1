@@ -123,6 +123,16 @@ int main(int argc, char* argv[])
         if (keystate[SDL_SCANCODE_LEFT]) offsetX -= 1;
         if (keystate[SDL_SCANCODE_RIGHT]) offsetX += 1;
 
+		static bool p_down = false;
+        if (keystate[SDL_SCANCODE_P])
+        {
+            if (!p_down)
+            {
+                gDijkstra.Build(*pBot);
+                p_down = true;
+            }
+        }
+
         if ((offsetX != 0) || (offsetY != 0))
         {
             gTarget.SetNext((gTarget.PositionX() + offsetX), (gTarget.PositionY() + offsetY), gLevel);

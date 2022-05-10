@@ -25,6 +25,7 @@ public:
 	bool completed;
 
 	virtual void Build(cBotBase &bot);
+	inline cDijkstra() { completed = false; }
 };
 
 extern cDijkstra gDijkstra;
