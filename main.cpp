@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     //======================================================================================
     //Load the map and set target position
     //======================================================================================
-    gLevel.Load("maps/3.txt");
+    gLevel.Load("maps/1.txt");
     gTarget.SetCurrent(30, 20, gLevel);
 
     //======================================================================================
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
     //======================================================================================
     // Create Bot
     //======================================================================================
-    cBotBase* pBot = new cBotSimple2();
+    cBotBase* pBot = new cBotRandom();
     pBot->SetCurrent(10, 20, gLevel);
 
     //======================================================================================
@@ -122,6 +122,16 @@ int main(int argc, char* argv[])
         if (keystate[SDL_SCANCODE_DOWN]) offsetY += 1;
         if (keystate[SDL_SCANCODE_LEFT]) offsetX -= 1;
         if (keystate[SDL_SCANCODE_RIGHT]) offsetX += 1;
+
+		static bool p_down = false;
+        if (keystate[SDL_SCANCODE_P])
+        {
+            if (!p_down)
+            {
+                gDijkstra.Build(*pBot);
+                p_down = true;
+            }
+        }
 
         if ((offsetX != 0) || (offsetY != 0))
         {
