@@ -16,6 +16,7 @@ class cBotRandom : public cBotBase
 class cDijkstra
 {
 public:
+	// Initialise the variables in accordance to the grid size
 	bool closed[GRIDWIDTH][GRIDHEIGHT]; //whether or not location is closed
 	float cost[GRIDWIDTH][GRIDHEIGHT]; //cost value for each location
 	int linkX[GRIDWIDTH][GRIDHEIGHT]; //link X coord for each location
@@ -24,8 +25,20 @@ public:
 
 	bool completed;
 
-	virtual void Build(cBotBase &bot);
+	// Set completed to false on creation
 	inline cDijkstra() { completed = false; }
 };
 
-extern cDijkstra gDijkstra;
+class cAStar : public cDijkstra // Inherit the variables from cDijkstra as the implementation is very similar
+{
+public:
+	virtual void Build(cBotBase &bot, int heuristicChoice);
+	
+	// The heuristic function has no real use outside of this class
+protected:
+	float heuristicChoice(int choice, int i, int j);
+};
+
+extern cAStar gAStar;
+
+// Dijkstra declaration no longer required as it has been replaced by A*
